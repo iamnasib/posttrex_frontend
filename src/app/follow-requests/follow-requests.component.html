@@ -1,0 +1,75 @@
+<div class="mt-16 z-0">
+  <div class="flex w-full justify-around border-b mb-2">
+    <button  class="text-gray-700 w-1/2 py-2 border-b-2 border-r border-r-gray-200 font-medium focus:outline-none" 
+    [ngClass]="{ 'border-cyan-500': selectedTab === 'received' }" (click)="reloadPage('received')">Received</button>
+
+    <button  class="text-gray-700 w-1/2 py-2 border-b-2 border-l border-l-gray-200 font-medium focus:outline-none" 
+    [ngClass]="{ 'border-cyan-500': selectedTab === 'sent' }" (click)="reloadPage('sent')" >Sent</button>
+  </div>
+    <div *ngIf="followRequests && selectedTab === 'received'"  class="flex flex-col space-y-2">
+        
+        <div *ngFor="let request of followRequests.slice().reverse() | slice:0:itemsToShow" class="flex border-b items-center justify-between py-2 px-4">
+          <div [routerLink]="['', request.username]" class="flex cursor-pointer items-center space-x-2">
+            <img [src]="request.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+            <div>
+              <h3 class="text-base sm:text-lg font-medium">{{request.username}}</h3>
+             
+            </div>
+          </div>
+        
+          <div class="flex space-x-2">
+            <button id="{{ 'acceptButton-' + request.id }}"  (click)="acceptFollowRequest(request.id)" 
+            class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Accept</button>
+
+            <button id="{{ 'deleteButton-' + request.id }}" (click)="deleteFollowRequest(request.id)" 
+            class="px-2.5 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none">Delete</button>
+
+            
+          </div>
+        </div>
+        <li align="center" [ngClass]="getClassName()" class="" >
+          <a class="block z-0 py-2 pl-3 pr-4 text-cyan-500 cursor-pointer hover:bg-gray-100 hover:no-underline  dark:text-gray-400  dark:hover:bg-gray-700 
+          dark:hover:text-white" 
+           (click)="SearchItemsToShow()" >
+            Show more
+      </a>
+        </li>
+       
+        
+      </div>
+      
+      <div class="flex flex-col text-center justify-center" *ngIf="followRequests.length<1 && selectedTab==='received'">
+        <p class="text-gray-500">No Received Follow Requests</p>
+      </div>
+
+      <div *ngIf="sentFollowRequests && selectedTab === 'sent'"  class="flex flex-col space-y-2">
+        
+        <div *ngFor="let request of sentFollowRequests.slice().reverse() | slice:0:itemsToShow" class="flex border-b items-center justify-between py-2 px-4">
+          <div [routerLink]="['', request.username]" class="flex cursor-pointer items-center space-x-2">
+            <img [src]="request.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+            <div>
+              <h3 class="text-base sm:text-lg font-medium">{{request.username}}</h3>
+             
+            </div>
+          </div>
+        
+          <div class="flex space-x-2">
+            <button id="{{ 'acceptButton-' + request.id }}"  (click)="followToggle(request.id)" 
+            class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Requested</button>            
+          </div>
+        </div>
+        <li align="center" [ngClass]="getClassName()" class="" >
+          <a class="block z-0 py-2 pl-3 pr-4 text-cyan-500 cursor-pointer hover:bg-gray-100 hover:no-underline  dark:text-gray-400  dark:hover:bg-gray-700 
+          dark:hover:text-white" 
+           (click)="SearchItemsToShow()" >
+            Show more
+      </a>
+        </li>
+       
+        
+      </div>
+      <div class="flex flex-col text-center justify-center" *ngIf="sentFollowRequests.length<1 && selectedTab==='sent'">
+        <p class="text-gray-500">No sent Follow Requests</p>
+      </div>
+      
+</div>

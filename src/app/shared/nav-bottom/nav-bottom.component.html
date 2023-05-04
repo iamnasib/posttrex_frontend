@@ -1,0 +1,87 @@
+<!-- 
+<div class="fixed z-50 w-full h-16  bg-white border border-gray-200 rounded-md
+ bottom-0 left-0 dark:bg-gray-700 dark:border-gray-600">
+  <div class="grid h-full max-w-lg grid-cols-5 mx-auto">
+      <button  type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+          <svg class="w-6 h-6 mb-1  dark:text-gray-400 {{ current === '/home' ? 'text-cyan-600' : 'text-gray-500' }} group-hover:text-cyan-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+          </svg>
+          <span class="sr-only">Home</span>
+      </button>
+      
+      <button [routerLink]="['search']"  type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" class="w-6 h-6 mb-1 {{ current === '/search' ? 'text-cyan-600' : 'text-gray-500' }} dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-blue-500"
+        fill="currentColor" aria-hidden="true">
+          <path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 
+          L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 
+          12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"/>
+        </svg>  
+        
+        
+          <span class="sr-only">Search</span>
+      </button>
+      <button  type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-l-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        
+        <span class="text-black">{{notifications.length}}</span>
+    </button>
+      
+      
+      <button  type="button" class="inline-flex flex-col items-center justify-center px-5 hover:bg-gray-50 dark:hover:bg-gray-800 group">
+        <svg class="w-6 h-6 {{ current === '/upload' ? 'text-cyan-600' : 'text-gray-500' }} group-hover:text-cyan-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
+      </svg>
+          <span class="sr-only">Upload</span>
+      </button>
+      
+      <button [routerLink]="['',currentUser]" type="button" class="inline-flex flex-col items-center justify-center px-5 rounded-r-full hover:bg-gray-50 dark:hover:bg-gray-800 group">
+          <svg class="w-6 h-6 mb-1 {{ current === '/'+currentUser ? 'text-cyan-600' : 'text-gray-500' }} dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path clip-rule="evenodd" fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"></path>
+          </svg>
+          <span class="sr-only">Profile</span>
+      </button>
+      
+  </div>
+</div> -->
+
+
+
+<div  class="fixed bottom-0 left-0 right-0 bg-white shadow-lg">
+    <nav class="flex justify-around py-3">
+      <a (click)="reloadPage('home')"  class="relative cursor-pointer flex flex-col items-center">
+        <svg class="w-6 h-6 mb-1  dark:text-gray-400 {{ current === '/home' || '' ? 'text-cyan-600' : 'text-gray-500' }} group-hover:text-cyan-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+          </svg>
+          <div *ngIf="newMessages" class="absolute inline-flex items-center justify-center w-3 h-3 text-xs  text-white bg-cyan-500 border-1 border-white  rounded-full bottom-5 left-3 dark:border-gray-900"></div>
+        
+      </a>
+      <a (click)="reloadPage('search')"  class="flex cursor-pointer flex-col items-center">
+        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 50 50" class="w-6 h-6 mb-1 {{ current === '/search' ? 'text-cyan-600' : 'text-gray-500' }} dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-blue-500"
+        fill="currentColor" aria-hidden="true">
+          <path d="M 21 3 C 11.621094 3 4 10.621094 4 20 C 4 29.378906 11.621094 37 21 37 C 24.710938 37 28.140625 35.804688 30.9375 33.78125 L 44.09375 46.90625 L 46.90625 44.09375 
+          L 33.90625 31.0625 C 36.460938 28.085938 38 24.222656 38 20 C 38 10.621094 30.378906 3 21 3 Z M 21 5 C 29.296875 5 36 11.703125 36 20 C 36 28.296875 29.296875 35 21 35 C 
+          12.703125 35 6 28.296875 6 20 C 6 11.703125 12.703125 5 21 5 Z"/>
+        </svg> 
+        
+      </a>
+      <a aria-disabled="true" class="flex flex-col items-center">
+        <svg class="w-6 h-6 {{ current === '/upload' ? 'text-cyan-600' : 'text-gray-500' }} group-hover:text-cyan-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>
+      </svg>
+        </a>
+        <a (click)="reloadPage('notifications')"  class="relative cursor-pointer flex flex-col items-center">
+          <svg id="notification-icon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 {{ current === '/notifications' ? 'text-cyan-600' : 'text-gray-500' }} group-hover:text-cyan-600"  viewBox="0 0 24 24" fill="none">
+            <path id="stroke" d="M12.02 2.90991C8.70997 2.90991 6.01997 5.59991 6.01997 8.90991V11.7999C6.01997 12.4099 5.75997 13.3399 5.44997 13.8599L4.29997 15.7699C3.58997 16.9499 4.07997 18.2599 5.37997 18.6999C9.68997 20.1399 14.34 20.1399 18.65 18.6999C19.86 18.2999 20.39 16.8699 19.73 15.7699L18.58 13.8599C18.28 13.3399 18.02 12.4099 18.02 11.7999V8.90991C18.02 5.60991 15.32 2.90991 12.02 2.90991Z" stroke="#6b7280" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"/>
+            <path id="stroke" d="M13.87 3.19994C13.56 3.10994 13.24 3.03994 12.91 2.99994C11.95 2.87994 11.03 2.94994 10.17 3.19994C10.46 2.45994 11.18 1.93994 12.02 1.93994C12.86 1.93994 13.58 2.45994 13.87 3.19994Z" stroke="#6b7280" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+            <path id="stroke" d="M15.02 19.0601C15.02 20.7101 13.67 22.0601 12.02 22.0601C11.2 22.0601 10.44 21.7201 9.90002 21.1801C9.36002 20.6401 9.02002 19.8801 9.02002 19.0601" stroke="#6b7280" stroke-width="1.5" stroke-miterlimit="10"/>
+            </svg>
+            <div *ngIf="notification>0" class="absolute inline-flex items-center justify-center w-4 h-4 text-xs  text-white bg-cyan-500 border-1 border-white rounded-full -top-2 -right-1 dark:border-gray-900">{{notification}}</div>
+      </a>
+
+      <a (click)="reloadPage('profile')"  class="flex flex-col cursor-pointer items-center">
+        <svg class="w-6 h-6 mb-1 {{ current === '/'+currentUser ? 'text-cyan-600' : 'text-gray-500' }} dark:text-gray-400 group-hover:text-cyan-600 dark:group-hover:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path clip-rule="evenodd" fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z"></path>
+          </svg>
+      
+      </a>
+    </nav>
+  </div>

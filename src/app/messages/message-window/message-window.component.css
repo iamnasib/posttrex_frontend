@@ -1,0 +1,28 @@
+#messageContainer {
+    max-height: calc(100vh - 150px); /* Subtract the height of your header and footer */
+    overflow-y: scroll; /* Add a scrollbar when content exceeds the max-height */
+  }
+
+  #messageContainer::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+  }
+  #messageContainer{
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+  }
+  .scroll-to-bottom-button {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .scroll-to-bottom-button:hover {
+    background-color: #000;
+    color: #fff;
+  }
+  
