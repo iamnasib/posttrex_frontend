@@ -1,8 +1,9 @@
-<<<<<<< HEAD
-<div class="z-0">
-=======
-<div class="mt-16 z-0">
->>>>>>> fd615f0833f4d2295efab592e1945f6167cd9191
+<div *ngIf="!contentLoaded" class="container h-screen flex flex-col items-center justify-center">
+  <h1 class="text-3xl animate-pulse font-logo cursor-pointer tracking-wide">Posttrex
+    <sup class="text-sm z-0 ">BETA</sup>  
+  </h1>
+</div>
+<div *ngIf="contentLoaded" class="z-0">
     
       <div *ngIf="blockedUsersList"  class="flex flex-col space-y-2">
           
