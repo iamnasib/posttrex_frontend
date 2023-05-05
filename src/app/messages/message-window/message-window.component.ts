@@ -168,7 +168,21 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
         this.webSocketService.getMessages().subscribe({
           next:(data:any) => {
             console.log(data);
+             // Check if the page is already scrolled to the bottom
+             const isScrolledToBottom = this.messageWindow.scrollHeight - this.messageWindow.offsetHeight <= this.messageWindow.scrollTop + 1;
+             console.log(isScrolledToBottom)
             this.messages.push(data);
+           
+            setTimeout(() => {
+              // Check if the page is already scrolled to the bottom
+            
+            console.log(isScrolledToBottom)
+            // Call scrollToBottom() only if the page is already at the bottom
+            if (isScrolledToBottom) {
+              this.scrollToBottom('no');
+    }
+            });
+            
             this.webSocketService.MarkMessagesAsRead(this.recieverUsername).subscribe({
               next:(data:any)=>{
                 console.log(data)
@@ -259,17 +273,21 @@ scrollToBottom(flag:string) {
       }
 
       if(this.message != ""){
+        const isScrolledToBottom = this.messageWindow.scrollHeight - this.messageWindow.offsetHeight  <= this.messageWindow.scrollTop + 1;
           this.messages.push({msg: this.message, senderid: this.sender, receiverid: this.receiver})
           console.log(this.messages)
           
-          
-          
           this.webSocketService.emit("new-message", {receiverid: this.receiver, msg: this.message, senderid: this.sender});
-          // this.webSocketService.emit('sendNotifications', {
-          //   message: `New Notification.`,
-          //   sender: this.sender,
-          //   reciever: this.receiver})
-          this.scrollToBottom('no');
+         
+          setTimeout(() => {
+            // Check if the page is already scrolled to the bottom
+          
+          console.log(isScrolledToBottom)
+          // Call scrollToBottom() only if the page is already at the bottom
+          if (isScrolledToBottom) {
+            this.scrollToBottom('no');
+  }
+          });
           this.webSocketService.storeMessagedb(this.chatdetails);
           this.message = '';
       }
