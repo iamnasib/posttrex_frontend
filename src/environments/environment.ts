@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  serverURL: 'https://localhost:8000',
+  serverURL: 'https://posttrex.pythonanywhere.com',
   siteName:"Postchat"
 };
 
