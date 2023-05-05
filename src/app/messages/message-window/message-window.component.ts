@@ -204,9 +204,7 @@ private messageWindow: any;
 ngAfterViewInit() {
       
   this.messageWindow = document.getElementById('messageContainer');
-  setTimeout(() => {
-    this.scrollToBottom();
-  }, 0);
+
       }
 
       ngAfterViewChecked() {
