@@ -168,6 +168,11 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
           next:(data:any) => {
             console.log(data);
             this.messages.push(data);
+            this.webSocketService.MarkMessagesAsRead(this.recieverUsername).subscribe({
+              next:(data:any)=>{
+                console.log(data)
+              }
+            })
             
           },
           error:(error) => {
