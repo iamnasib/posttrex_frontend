@@ -1,0 +1,291 @@
+<div *ngIf="!contentLoaded" class="container h-screen flex flex-col items-center justify-center">
+  <h1 class="text-3xl animate-pulse font-logo cursor-pointer tracking-wide">Posttrex
+    <sup class="text-sm z-0 ">BETA</sup>  
+  </h1>
+</div>
+
+<!-- Header starts -->
+<div *ngIf="contentLoaded">
+<div *ngIf="userProfile">
+  <div [ngClass]="!isBlocked || isBlockedBy == true ? 'justify-between': 'justify-start'"
+  class="fixed top-0 w-full flex items-center  bg-cyan-500 p-2 border-b border-gray-200">
+    <a (click)="backClick()" class="cursor-pointer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="w-10 h-10 my-1 text-white ml-2"
+      >
+        <path
+          class="text-white fill-current"
+          d="M9.41 11H17a1 1 0 0 1 0 2H9.41l2.3 2.3a1 1 0 1 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L9.4 11z"
+        />
+      </svg>
+    </a>
+    
+    <div  class="flex items-center">
+      
+      <div>
+        <div class="text-base font-medium text-white">{{userProfile.username}}</div>
+        <!-- <div class="text-xs text-gray-500">Active 5 mins ago</div> -->
+      </div>
+    </div>
+    <button *ngIf="!isBlocked || isBlockedBy" class="p-1 rounded-full  focus:outline-none"  >
+      <svg (click)="showOptions()"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="icon-dots-vertical cursor-pointer w-8 h-8"
+      >
+        <path
+          class="text-white fill-current"
+          fill-rule="evenodd"
+          d="M12 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+        />
+      </svg>
+    </button>
+    <div *ngIf="showOptionsElement" class="z-50 my-4  text-base list-none bg-white divide-y 
+    divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 absolute right-2 top-12" id="dropdown-user">
+          
+    <div *ngIf="isOwner()">
+      
+      <ul class="py-1" role="none">
+        <li>
+          <a [routerLink]="['/settings']" class="block cursor-pointer hover:no-underline px-4 py-2 text-sm text-gray-700 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+            <svg class="w-6 h-6 mb-1 inline text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path>
+          </svg> Settings
+          </a>
+        </li>
+        <li>
+          <a (click)="Logout()" class="block cursor-pointer px-4 py-2 text-sm hover:no-underline text-red-500 hover:text-red-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
+            <svg aria-hidden="true" class="flex-shrink-0 inline w-6 h-6 text-red-500 transition duration-75 dark:text-red-300 group-hover:text-red-500 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
+            Logout</a>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="!isOwner()">
+      <ul class="py-1" role="none">
+        <li>
+          <a (click)="blockUser()" *ngIf="!isBlocked && !isBlockedBy"  class="block cursor-pointer hover:no-underline 
+          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" 
+          role="menuitem">Block</a>
+          <a (click)="blockUser()" *ngIf="isBlockedBy" class="block cursor-pointer hover:no-underline 
+          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" 
+          role="menuitem">Unblock</a>
+        </li>
+        <li>
+          <a *ngIf="!isBlocked && !isBlockedBy" [routerLink]="['/chat/',userProfile.username]" class="block cursor-pointer px-4 py-2 text-sm hover:no-underline text-gray-700 
+          hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Message</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+    
+  </div>
+
+
+
+
+  <!-- <div [ngClass]="!isBlocked || isBlockedBy == true ? 'justify-between': 'justify-start'"
+    class="fixed w-full bg-cyan-500 h-16 pt-2 z-10 text-white  flex shadow-md"
+    style="top:0px; overscroll-behavior: none;"
+  >
+    back button
+    <a (click)="backClick()" class="cursor-pointer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="w-12 h-12 my-1 text-white ml-2"
+      >
+        <path
+          class="text-white fill-current"
+          d="M9.41 11H17a1 1 0 0 1 0 2H9.41l2.3 2.3a1 1 0 1 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L9.4 11z"
+        />
+      </svg>
+    </a>
+    <div *ngIf="userProfile"  class="my-3 text-white font-bold text-lg tracking-wide">
+        <span class="my-3 text-white  text-lg tracking-none" >{{userProfile.username}}</span>
+        </div>
+    3 dots
+    <div *ngIf="!isBlocked || isBlockedBy" class="inline-block relative text-center  mr-2">
+      <svg (click)="showOptions()"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      class="icon-dots-vertical cursor-pointer w-8 h-8 mt-2 mr-2"
+    >
+      <path
+        class="text-white fill-current"
+        fill-rule="evenodd"
+        d="M12 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 7a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
+      />
+    </svg>
+    <div *ngIf="showOptionsElement" class="z-50 my-4  text-base list-none bg-white divide-y 
+    divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 absolute -left-16 " id="dropdown-user">
+          
+    <div *ngIf="isOwner()">
+      <div class="px-4 py-2" role="none" *ngIf="userProfile">
+        
+        <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" *ngIf="userProfile.username" role="none">
+          {{userProfile.username}}
+        </p>
+      </div>
+      <ul class="py-1" role="none">
+        <li>
+          <a [routerLink]="['/settings']" class="block cursor-pointer hover:no-underline px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Settings</a>
+        </li>
+        <li>
+          <a (click)="Logout()" class="block cursor-pointer px-4 py-2 text-sm hover:no-underline text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Logout</a>
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="!isOwner()">
+      <ul class="py-1" role="none">
+        <li>
+          <a (click)="blockUser()" *ngIf="!isBlocked && !isBlockedBy"  class="block cursor-pointer hover:no-underline 
+          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" 
+          role="menuitem">Block</a>
+          <a (click)="blockUser()" *ngIf="isBlockedBy" class="block cursor-pointer hover:no-underline 
+          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" 
+          role="menuitem">Unblock</a>
+        </li>
+        <li>
+          <a *ngIf="!isBlocked && !isBlockedBy" [routerLink]="['/chat/',userProfile.username]" class="block cursor-pointer px-4 py-2 text-sm hover:no-underline text-gray-700 
+          hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Message</a>
+        </li>
+      </ul>
+    </div>
+    </div>
+  </div>
+
+    
+  </div> -->
+
+</div>
+<!-- Header ends -->
+
+<!-- Main Content -->
+<div class="mt-16" *ngIf="userProfile">
+  <!-- IF USer IS  BLOCKED -->
+  <div class="container mx-auto " *ngIf="isBlocked || isBlockedBy">
+    <div class="flex flex-wrap -mx-4">
+      <div class="w-full md:w-1/4 ">
+        <div class="bg-white p-6">
+          <img class="w-32 h-32 rounded-full mx-auto mb-4" [src]="userProfile.avatar" alt="Profile Picture">
+          <h2 class="text-xl inline font-bold text-gray-800 mb-2" *ngIf="userProfile.full_name">{{userProfile.full_name}}
+            <img *ngIf="userProfile.is_verified" class="w-5 h-5 inline" src="https://img.icons8.com/fluency/48/null/verified-badge.png"/>
+          </h2>    
+          
+          <h2 class="text-xl inline font-bold text-gray-800 mb-2" *ngIf="!userProfile.full_name">{{userProfile.username}}
+            <img *ngIf="userProfile.is_verified" class="w-5 h-5 inline" src="https://img.icons8.com/fluency/48/null/verified-badge.png"/>
+          </h2>
+          <div class="flex mb-2">
+            <div class="mr-4">
+              <span class="text-gray-800 mr-1 font-bold">0</span>
+              <span class="text-gray-600">Followers</span>
+            </div>
+            <div>
+              <span class="text-gray-800 mr-1 font-bold">0</span>
+              <span class="text-gray-600">Following</span>
+            </div>
+          </div>
+          
+      <button (click)="blockUser()" *ngIf="isBlockedBy" type="button" class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
+      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        </svg>
+        <span class="sr-only">Loading...</span>
+      </span> Unblock</button>
+        </div>
+      </div>
+  </div>
+  </div>
+  <!-- IF USer IS not BLOCKED -->
+  <div class="container mx-auto " *ngIf="!isBlocked && !isBlockedBy">
+    <div class="flex flex-wrap -mx-4">
+      <div class="w-full md:w-1/4 ">
+        <div class="bg-white p-6">
+          <img class="w-32 h-32 rounded-full mx-auto mb-4" [src]="userProfile.avatar" alt="Profile Picture">
+          <h2 class="text-xl inline text-gray-800 mb-2" *ngIf="userProfile.full_name">{{userProfile.full_name}}
+            <img *ngIf="userProfile.is_verified" class="w-5 h-5 inline" src="https://img.icons8.com/fluency/48/null/verified-badge.png"/>
+          </h2>              
+          <h2 class="text-xl inline font-bold text-gray-800 mb-2" *ngIf="!userProfile.full_name">{{userProfile.username}}
+            <img *ngIf="userProfile.is_verified" class="w-5 h-5 inline" src="https://img.icons8.com/fluency/48/null/verified-badge.png"/>
+          </h2>
+          <p *ngIf="userProfile.intro" class="text-gray-600 mb-2" style="word-break: break-all;">{{userProfile.intro}}</p>
+          <a href="{{userProfile.website}}" class="text-blue-500 block mb-2" *ngIf="userProfile.website">{{userProfile.website}}</a>
+          <div class="flex mb-2">
+            <div *ngIf="userProfile.is_private && !isOwner()" class="mr-4 focus:outline-none cursor-pointer" >
+              <span class="text-gray-800 mr-1 font-bold"> {{userProfile.followers.length}} </span>
+              <span class="text-gray-600">Followers</span>
+            </div>
+            <div *ngIf="!userProfile.is_private || isOwner()" class="mr-4 focus:outline-none cursor-pointer" [routerLink]="['/follow-list', 'followers',userId]">
+              <span class="text-gray-800 mr-1 font-bold"> {{userProfile.followers.length}} </span>
+              <span class="text-gray-600">Followers</span>
+            </div>
+            <div *ngIf="userProfile.is_private && !isOwner()" class=" focus:outline-none cursor-pointer">
+              <span class="text-gray-800 mr-1 font-bold"> {{userProfile.following.length}} </span>
+              <span class="text-gray-600">Following</span>
+            </div>
+            <div *ngIf="!userProfile.is_private || isOwner() " class=" focus:outline-none cursor-pointer" [routerLink]="['/follow-list', 'following', userId]">
+              <span class="text-gray-800 mr-1 font-bold"> {{userProfile.following.length}} </span>
+              <span class="text-gray-600">Following</span>
+            </div>
+          </div>
+          <p class="text-xs text-gray-400">Member since {{userProfile.date_joined | date:'MMM yyyy'}}</p>
+          <button *ngIf="isOwner()" type="button" [routerLink]="['/edit-profile']"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
+      dark:focus:ring-cyan-800">Edit Profile</button>
+      <button (click)="followToggle()" *ngIf="!isOwner() && !following && !requested" type="button"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
+      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        </svg>
+        <span class="sr-only">Loading...</span>
+      </span> Follow</button>
+      <button (click)="followToggle()" *ngIf="!isOwner() && following" type="button"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
+      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        </svg>
+        <span class="sr-only">Loading...</span>
+      </span> Unfollow</button>
+      <button (click)="followToggle()" *ngIf="!isOwner() && requested" type="button"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
+      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+        </svg>
+        <span class="sr-only">Loading...</span>
+      </span> Requested</button>
+        </div>
+      </div>
+      <hr>
+      <div class="w-full md:w-3/4 mb-10 ">
+        <hr>
+        <p class="text-center mt-4 text-gray-700">Posts feature coming very soon!!</p>
+        <!-- <div class="bg-white   p-6">
+          
+          <div class="grid grid-cols-3 sm:grid-cols-4 gap-px">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+            <img class="" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/800px-Image_created_with_a_mobile_phone.png" alt="Profile Picture">
+           
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+</div><br><br>

@@ -1,0 +1,76 @@
+<div *ngIf="!contentLoaded" class="container h-screen flex flex-col items-center justify-center">
+  <h1 class="text-3xl animate-pulse font-logo cursor-pointer tracking-wide">Posttrex
+    <sup class="text-sm z-0 ">BETA</sup>  
+  </h1>
+</div>
+<div *ngIf="contentLoaded">
+<header  class="flex sticky top-0 w-full z-50 items-center bg-cyan-500 justify-between border-b py-4 px-6">
+    <!-- Web App Name -->
+    <h1 class="text-3xl text-white font-logo cursor-pointer tracking-wide">Posttrex
+      <div class="absolute top-6 left-40 bg-white  text-cyan-500 text-xs px-1 pt-1 rounded-md flex items-center justify-center font-semibold">
+        BETA
+      </div>
+    </h1>
+    <!-- Message Icon -->
+    <a [routerLink]="['/chat']" class="cursor-pointer focus:outline-none"><svg   xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 cursor-pointer focus:outline-none  dark:text-gray-400"  viewBox="0 0 24 24" fill="none">
+      <path d="M12 3C5.11765 3 3 4.64706 3 10C3 13.7383 4.0328 15.6692 7 16.4939V21L11.0124 16.9876C11.3301 16.996 11.6592 17 12 17C18.8824 17 21 15.3529 21 10C21 4.64706 18.8824 3 12 3Z" stroke="#fafafa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="absolute top-6 right-4 bg-white w-4 h-4 text-cyan-500 text-xs rounded-full flex items-center justify-center font-semibold" *ngIf="unreadMessagesCount > 0">
+        {{ unreadMessagesCount }}
+      </div>
+    </a>
+  </header>
+  <!-- <div *ngIf="newMessages" id="alert-1" class="flex sticky p-4 mx-4 text-blue-700  border border-blue-300 rounded-lg rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+    <span class="sr-only">Info</span>
+    <div class="ml-3 text-sm font-medium">
+       <a  [routerLink]="['/chat']" class="font-semibold cursor-pointer hover:underline">New Message Received</a>
+    </div>
+      <button (click)="newMessages=false" type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8 dark:bg-gray-800 dark:text-blue-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-1" aria-label="Close">
+        <span class="sr-only">Close</span>
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+    </button>
+  </div> -->
+  <!-- Main Content -->
+  <main class="bg-white py-1 px-1">
+    <div class="max-w-lg mx-auto">
+      <!-- Posts -->
+      <div class="bg-white  shadow-md mb-8">
+        <img class="h-48 w-full object-cover rounded-t-lg" src="https://img.freepik.com/free-photo/coming-soon-word-metallic-text-style_53876-124845.jpg" alt="Post Image">
+        <div class="p-6">
+          <h2 class="text-xl font-medium font-logo text-gray-800 mb-2">Posttrex<sup class="text-xs z-0 ml-1.5">BETA</sup></h2>
+          <p class="text-gray-700"><strong>Great news for all our users!</strong> We are excited to announce some new features that will be
+             coming soon to our platform.<br><br>
+
+             <strong class="font-semibold">Firstly</strong>, we will be introducing the ability to upload posts with like and comment functionality. You will also be able to save posts 
+            from other users and archive your own posts. This will allow you to easily manage and organize your content on our platform.<br><br>
+            
+            <strong class="font-semibold">Secondly</strong>, we will be implementing web push notifications. You will receive notifications for important updates, such as new followers 
+            or likes on your posts. This will ensure that you never miss an important interaction on our platform.<br><br>
+            
+            <strong class="font-semibold">Finally</strong>, we will be integrating AI into our platform for various uses. This will help us to provide better recommendations for content 
+            and connections, as well as improving the overall user experience.<br><br>
+
+            <strong class="font-semibold">Please note that </strong>  <span class="font-logo">Posttrex</span> is still in development and currently in BETA version. We are continuously working on improving 
+            and adding new features to the platform, with the goal of providing the best possible experience for our users.<br><br>
+
+            We appreciate your patience and understanding as we work to perfect our platform. In the meantime, we encourage you to explore 
+            the features that are currently available on <span class="font-logo">Posttrex</span> and provide us with any 
+            <a class="text-cyan-500" [routerLink]="['/send-feedback']">feedback</a> 
+            or suggestions that you may have.<br><br>
+
+            We would like to inform you that the current theme of Posttrex is basic and will be updated in the future. Additionally, we would like 
+            to clarify that the messages on our platform are not currently encrypted, but we are working towards implementing encryption in the 
+            near future. We understand that privacy is a concern for our users, and we would like to assure you that your passwords are
+             encrypted for added security.
+
+            Thank you for being a part of <span class="font-logo">Posttrex</span>  and helping us to build a vibrant and engaging community.
+
+            
+                        
+            
+        </div>
+      </div>
+      
+    </div><br><br>
+    </main><br><br><br>
+  </div>

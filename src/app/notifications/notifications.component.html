@@ -1,0 +1,97 @@
+<div *ngIf="!contentLoaded" class="container h-screen flex flex-col items-center justify-center">
+  <h1 class="text-3xl animate-pulse font-logo cursor-pointer tracking-wide">Posttrex
+    <sup class="text-sm z-0 ">BETA</sup>  
+  </h1>
+</div>
+<div *ngIf="contentLoaded" class="z-0">
+  <div class="flex flex-col text-center justify-center">
+    <div class="flex border-b items-center justify-between py-2 px-4">
+      <div [routerLink]="['/follow-requests','received']" class="flex cursor-pointer items-center space-x-2">
+          <img src="https://img.icons8.com/ios/50/null/add-administrator.png" alt="Picture" class="border w-12 h-12 rounded-full">
+          <div>
+            <h3  class="text-base sm:text-lg font-medium">{{followRequestsLength}} <span class="text-base text-gray-600 sm:text-lg font-normal">
+              Follow Requests
+            </span></h3>
+            <!-- <p class="text-xs sm:text-sm text-gray-500">Follow Request</p> -->
+          </div>
+        </div>
+    </div>
+  </div>
+    <div *ngIf="notifications"  class="flex flex-col space-y-2">
+      <div *ngFor="let notification of notifications">
+        <div *ngIf="notification.category=='request'" class="flex border-b items-center justify-between py-2 px-4">
+          <div class="flex cursor-pointer items-center space-x-2">
+              <img [routerLink]="['', notification.notification_sender.username]" [src]="notification.notification_sender.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+              <div>
+                <h3 [routerLink]="['', notification.notification_sender.username]" class="text-base sm:text-lg font-medium">{{notification.notification_sender.username}} 
+                  <span [routerLink]="['/follow-requests']" [ngClass]="{'font-medium': !notification.is_read }" class="text-base text-gray-600 sm:text-lg font-normal">
+                  {{notification.verb}}<span class="text-xs ml-2 text-gray-400">{{ formatTimeDiff(notification.created_at) }}</span>
+                </span></h3>
+                <!-- <p class="text-xs sm:text-sm text-gray-500">Follow Request</p> -->
+              </div>
+            </div>
+            <!-- <div class="flex space-x-2">
+              <button id="{{ 'acceptButton-' + notification.notification_sender.id }}"  (click)="acceptFollowRequest(request.id)" 
+            class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Accept</button>
+
+            <button id="{{ 'deleteButton-' + notification.notification_sender.id }}" (click)="deleteFollowRequest(request.id)" 
+            class="px-2.5 py-2 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 focus:outline-none">Delete</button>
+            </div> -->
+        </div>
+        <div *ngIf="notification.category=='follow'" class="flex border-b items-center justify-between py-2 px-4">
+          <div  class="flex cursor-pointer items-center space-x-2">
+              <img [routerLink]="['', notification.notification_sender.username]" [src]="notification.notification_sender.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+              <div>
+                <h3 [routerLink]="['', notification.notification_sender.username]" class="text-base sm:text-lg font-medium">{{notification.notification_sender.username}} <span class="text-base text-gray-600 sm:text-lg font-normal">
+                  {{notification.verb}}<span class="text-xs ml-2 text-gray-400">{{ formatTimeDiff(notification.created_at) }}</span>
+                </span></h3>
+                <!-- <p class="text-xs sm:text-sm text-gray-500">Follow Request</p> -->
+              </div>
+            </div>
+            <!-- <div class="flex space-x-2">
+              <button 
+              class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Follow</button>
+  
+              </div> -->
+        </div>
+        <div *ngIf="notification.category=='like'" class="flex border-b items-center justify-between py-2 px-4">
+          <div  class="flex cursor-pointer items-center space-x-2">
+              <img [routerLink]="['', notification.notification_sender.username]" [src]="notification.notification_sender.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+              <div>
+                <h3 [routerLink]="['', notification.notification_sender.username]" class="text-base sm:text-lg font-medium">{{notification.notification_sender.username}} <span class="text-base text-gray-600 sm:text-lg font-normal">
+                  {{notification.verb}}<span class="text-xs ml-2 text-gray-400">{{ formatTimeDiff(notification.created_at) }}</span>
+                </span></h3>
+                <!-- <p class="text-xs sm:text-sm text-gray-500">Follow Request</p> -->
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <!-- <button 
+              class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Follow</button> -->
+  
+              </div>
+        </div>
+
+        <div *ngIf="notification.category=='comment'" class="flex border-b items-center justify-between py-2 px-4">
+          <div  class="flex cursor-pointer items-center space-x-2">
+              <img [routerLink]="['', notification.notification_sender.username]" [src]="notification.notification_sender.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+              <div>
+                <h3 [routerLink]="['', notification.notification_sender.username]" class="text-base sm:text-lg font-medium">{{notification.notification_sender.username}} <span class="text-base text-gray-600 sm:text-lg font-normal">
+                  {{notification.verb}}<span class="text-xs ml-2 text-gray-400">{{ formatTimeDiff(notification.created_at) }}</span>
+                </span></h3>
+                <!-- <p class="text-xs sm:text-sm text-gray-500">Follow Request</p> -->
+              </div>
+            </div>
+            <div class="flex space-x-2">
+              <!-- <button 
+              class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Follow</button> -->
+  
+              </div>
+        </div>
+      </div>
+        
+        <div class="flex flex-col mt-4 text-center justify-center" *ngIf="notifications.length<1">
+        <p class="text-gray-500">No Notifications</p>
+      </div>
+    </div>
+    
+</div>

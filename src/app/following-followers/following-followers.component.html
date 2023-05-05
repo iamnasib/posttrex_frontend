@@ -1,0 +1,111 @@
+<div *ngIf="!contentLoaded" class="container h-screen flex flex-col items-center justify-center">
+  <h1 class="text-3xl animate-pulse font-logo cursor-pointer tracking-wide">Posttrex
+    <sup class="text-sm z-0 ">BETA</sup>  
+  </h1>
+</div>
+
+<div *ngIf="contentLoaded">
+  <div  
+  class="fixed top-0 w-full flex items-center z-10  bg-cyan-500 p-2 border-b justify-start border-gray-200">
+    <a (click)="backClick()" class="cursor-pointer">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        class="w-10 h-10 my-1 text-white ml-2"
+      >
+        <path
+          class="text-white fill-current"
+          d="M9.41 11H17a1 1 0 0 1 0 2H9.41l2.3 2.3a1 1 0 1 1-1.42 1.4l-4-4a1 1 0 0 1 0-1.4l4-4a1 1 0 0 1 1.42 1.4L9.4 11z"
+        />
+      </svg>
+    </a>
+    
+    <div  class="flex cursor-pointer items-center">
+      
+      <div>
+        <div  class="text-base font-medium text-white">{{username}}</div>
+        
+        <!-- <div class="text-xs text-gray-500">Active 5 mins ago</div> -->
+      </div>
+    </div>
+  </div>
+
+
+   
+  
+<div class="mt-16 z-0">
+    <div class="flex w-full justify-around border-b mb-2">
+      <button class="text-gray-700 w-1/2 py-2 border-b-2 border-r border-r-gray-200 font-medium focus:outline-none" 
+      [ngClass]="{ 'border-cyan-500': selectedTab === 'followers' }" (click)="reloadPage('followers')">Followers</button>
+  
+      <button class="text-gray-700 w-1/2 py-2 border-b-2 border-l border-l-gray-200 font-medium focus:outline-none" 
+      [ngClass]="{ 'border-cyan-500': selectedTab === 'following' }" (click)="reloadPage('following')">Following</button>
+    </div>
+
+        <!-- FOLLOWER TAB -->
+      <div *ngIf="followersList && selectedTab === 'followers'"  class="flex flex-col space-y-2">
+          
+          <div *ngFor="let request of followersList.slice().reverse() | slice:0:itemsToShow" class="flex border-b items-center justify-between py-2 px-4">
+            <div [routerLink]="['', request.username]" class="flex cursor-pointer items-center space-x-2">
+              <img [src]="request.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+              <div>
+                <h3 class="text-base sm:text-lg font-medium">{{request.username}}</h3>
+               
+              </div>
+            </div>
+          
+            <div class="flex space-x-2">
+              <button id="{{ 'removeButton-' + request.id }}"  (click)="removeFollower(request.id)" 
+              class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Remove</button>
+  
+            </div>
+          </div>
+          <li align="center" [ngClass]="getClassName()" class="" >
+            <a class="block z-0 py-2 pl-3 pr-4 text-cyan-500 cursor-pointer hover:bg-gray-100 hover:no-underline  dark:text-gray-400  dark:hover:bg-gray-700 
+            dark:hover:text-white" 
+             (click)="followersItemsToShow()" >
+              Show more
+        </a>
+          </li>
+         
+          
+        </div>
+        
+        <div class="flex flex-col text-center justify-center" *ngIf="followersList.length<1 && selectedTab==='followers'">
+          <p class="text-gray-500">No followers</p>
+        </div>
+        <!-- END FOLLOWER TAB -->
+        <!-- FOLLOWING TAB -->
+
+        <div *ngIf="followingList && selectedTab === 'following'"  class="flex flex-col space-y-2">
+          
+          <div *ngFor="let request of followingList.slice().reverse() | slice:0:itemsToShow" class="flex border-b items-center justify-between py-2 px-4">
+            <div [routerLink]="['', request.username]" class="flex cursor-pointer items-center space-x-2">
+              <img [src]="request.avatar" alt="Profile Picture" class="w-12 h-12 rounded-full">
+              <div>
+                <h3 class="text-base sm:text-lg font-medium">{{request.username}}</h3>
+               
+              </div>
+            </div>
+          
+            <div class="flex space-x-2">
+              <button id="{{ 'followButton-' + request.id }}"  (click)="followToggle(request.id)" 
+              class="px-2.5 py-2 text-sm font-medium text-white bg-cyan-500 rounded-lg hover:bg-cyan-600 focus:outline-none">Following</button>            
+            </div>
+          </div>
+          <li align="center" [ngClass]="getClassName()" class="" >
+            <a class="block z-0 py-2 pl-3 pr-4 text-cyan-500 cursor-pointer hover:bg-gray-100 hover:no-underline  dark:text-gray-400  dark:hover:bg-gray-700 
+            dark:hover:text-white" 
+             (click)="followingItemsToShow()" >
+              Show more
+        </a>
+          </li>
+         
+          
+        </div>
+        <div class="flex flex-col text-center justify-center" *ngIf="followingList.length<1 && selectedTab==='following'">
+          <p class="text-gray-500">No following</p>
+        </div>
+        <!-- END FOLLOWING TAB -->
+  </div>
+</div>
