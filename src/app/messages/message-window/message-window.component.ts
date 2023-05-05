@@ -31,6 +31,7 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
   crntUserIsBlocked=false;
   showScrollToBottomButton: boolean=false;
   contentLoaded=false;
+  
 
   constructor(
       private route: ActivatedRoute,
@@ -151,7 +152,7 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
               console.log('length',this.prevmessages.length)
               console.log(document.body.scrollHeight); 
               this.contentLoaded=true
-              this.scrollToBottom();  
+              // this.scrollToBottom();  
             });
             console.log("scroll")
             
@@ -206,10 +207,16 @@ ngAfterViewInit() {
   this.messageWindow = document.getElementById('messageContainer');
 
       }
-
+      private scrolledToBottom=false;
       ngAfterViewChecked() {
-        this.messageWindow = document.getElementById('messageContainer');
-        this.scrollToBottom();
+        if(this.scrolledToBottom==false){
+          this.messageWindow = document.getElementById('messageContainer');
+          this.scrollToBottom('scrolledOnLoad');
+          
+        }
+          
+        
+        
       }
 
   
@@ -223,10 +230,14 @@ onMessageContainerScroll() {
   }
       }
 
-scrollToBottom() {
+scrollToBottom(flag:string) {
   try{
+    
     this.messageWindow.scrollTop = this.messageWindow.scrollHeight;
-
+    if(flag=='scrolledOnLoad'){
+      this.scrolledToBottom = true;
+    }
+    
     }
     catch(err){
       console.log(err)
@@ -258,7 +269,7 @@ scrollToBottom() {
           //   message: `New Notification.`,
           //   sender: this.sender,
           //   reciever: this.receiver})
-          this.scrollToBottom();
+          this.scrollToBottom('no');
           this.webSocketService.storeMessagedb(this.chatdetails);
           this.message = '';
       }
