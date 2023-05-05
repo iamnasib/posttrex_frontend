@@ -1,5 +1,5 @@
 #messageContainer {
-    max-height: calc(100vh - 2000px); /* Subtract the height of your header and footer */
+    max-height: calc(100vh - 1500px); /* Subtract the height of your header and footer */
     overflow-y: scroll; /* Add a scrollbar when content exceeds the max-height */
   }
 
