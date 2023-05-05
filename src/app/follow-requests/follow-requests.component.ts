@@ -23,6 +23,7 @@ export class FollowRequestsComponent implements OnInit {
   itemsToShow=10
   notification;
   selectedTab='';
+  contentLoaded=false;
   constructor(
     private activatedRoute: ActivatedRoute,
       private router: Router,
@@ -60,6 +61,7 @@ export class FollowRequestsComponent implements OnInit {
           this.followRequests = requested_by
           this.sentFollowRequests = requested_to
           console.log(this.sentFollowRequests)
+          this.contentLoaded=true
         }
       });
   }
