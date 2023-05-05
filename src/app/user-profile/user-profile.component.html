@@ -43,21 +43,21 @@
       </svg>
     </button>
     <div *ngIf="showOptionsElement" class="z-50 my-4  text-base list-none bg-white divide-y 
-    divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 absolute right-2 top-12" id="dropdown-user">
+    divide-gray-100 rounded shadow absolute right-2 top-12" id="dropdown-user">
           
     <div *ngIf="isOwner()">
       
       <ul class="py-1" role="none">
         <li>
-          <a [routerLink]="['/settings']" class="block cursor-pointer hover:no-underline px-4 py-2 text-sm text-gray-700 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-            <svg class="w-6 h-6 mb-1 inline text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <a [routerLink]="['/settings']" class="block cursor-pointer hover:no-underline px-4 py-2 text-sm text-gray-700 hover:text-gray-700 hover:bg-gray-100" role="menuitem">
+            <svg class="w-6 h-6 mb-1 inline text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <path d="M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"></path>
           </svg> Settings
           </a>
         </li>
         <li>
-          <a (click)="Logout()" class="block cursor-pointer px-4 py-2 text-sm hover:no-underline text-red-500 hover:text-red-500 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">
-            <svg aria-hidden="true" class="flex-shrink-0 inline w-6 h-6 text-red-500 transition duration-75 dark:text-red-300 group-hover:text-red-500 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
+          <a (click)="Logout()" class="block cursor-pointer px-4 py-2 text-sm hover:no-underline text-red-500 hover:text-red-500 hover:bg-gray-100" role="menuitem">
+            <svg aria-hidden="true" class="flex-shrink-0 inline w-6 h-6 text-red-500 transition duration-75 group-hover:text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path></svg>
             Logout</a>
         </li>
       </ul>
@@ -66,15 +66,15 @@
       <ul class="py-1" role="none">
         <li>
           <a (click)="blockUser()" *ngIf="!isBlocked && !isBlockedBy"  class="block cursor-pointer hover:no-underline 
-          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" 
+          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
           role="menuitem">Block</a>
           <a (click)="blockUser()" *ngIf="isBlockedBy" class="block cursor-pointer hover:no-underline 
-          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" 
+          px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" 
           role="menuitem">Unblock</a>
         </li>
         <li>
           <a *ngIf="!isBlocked && !isBlockedBy" [routerLink]="['/chat/',userProfile.username]" class="block cursor-pointer px-4 py-2 text-sm hover:no-underline text-gray-700 
-          hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Message</a>
+          hover:bg-gray-100" role="menuitem">Message</a>
         </li>
       </ul>
     </div>
@@ -189,9 +189,8 @@
           </div>
           
       <button (click)="blockUser()" *ngIf="isBlockedBy" type="button" class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
-      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
-      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
-        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
         </svg>
@@ -235,30 +234,26 @@
           </div>
           <p class="text-xs text-gray-400">Member since {{userProfile.date_joined | date:'MMM yyyy'}}</p>
           <button *ngIf="isOwner()" type="button" [routerLink]="['/edit-profile']"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
-      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
-      dark:focus:ring-cyan-800">Edit Profile</button>
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Edit Profile</button>
       <button (click)="followToggle()" *ngIf="!isOwner() && !following && !requested" type="button"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
-      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
-      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
-        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
         </svg>
         <span class="sr-only">Loading...</span>
       </span> Follow</button>
       <button (click)="followToggle()" *ngIf="!isOwner() && following" type="button"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
-      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
-      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
-        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
         </svg>
         <span class="sr-only">Loading...</span>
       </span> Unfollow</button>
       <button (click)="followToggle()" *ngIf="!isOwner() && requested" type="button"  class="text-white mt-2 duration-300 cursor-pointer bg-cyan-500 hover:bg-cyan-600 focus:ring-4 focus:outline-none focus:ring-cyan-300 font-small 
-      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-cyan-400 dark:hover:bg-cyan-700 
-      dark:focus:ring-cyan-800"><span *ngIf="loading" role="status">
-        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+      rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center "><span *ngIf="loading" role="status">
+        <svg aria-hidden="true" class="inline w-4 h-4 mr-2 text-gray-200 animate-spin fill-cyan-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
         </svg>

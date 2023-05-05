@@ -12,7 +12,7 @@
       </div>
     </h1>
     <!-- Message Icon -->
-    <a [routerLink]="['/chat']" class="cursor-pointer focus:outline-none"><svg   xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 cursor-pointer focus:outline-none  dark:text-gray-400"  viewBox="0 0 24 24" fill="none">
+    <a [routerLink]="['/chat']" class="cursor-pointer focus:outline-none"><svg   xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 cursor-pointer focus:outline-none"  viewBox="0 0 24 24" fill="none">
       <path d="M12 3C5.11765 3 3 4.64706 3 10C3 13.7383 4.0328 15.6692 7 16.4939V21L11.0124 16.9876C11.3301 16.996 11.6592 17 12 17C18.8824 17 21 15.3529 21 10C21 4.64706 18.8824 3 12 3Z" stroke="#fafafa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <div class="absolute top-6 right-4 bg-white w-4 h-4 text-cyan-500 text-xs rounded-full flex items-center justify-center font-semibold" *ngIf="unreadMessagesCount > 0">

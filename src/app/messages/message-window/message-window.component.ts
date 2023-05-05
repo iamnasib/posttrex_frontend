@@ -31,6 +31,7 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
   crntUserIsBlocked=false;
   showScrollToBottomButton: boolean=false;
   contentLoaded=false;
+  
 
   constructor(
       private route: ActivatedRoute,
@@ -151,7 +152,7 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
               console.log('length',this.prevmessages.length)
               console.log(document.body.scrollHeight); 
               this.contentLoaded=true
-              this.scrollToBottom();  
+              // this.scrollToBottom();  
             });
             console.log("scroll")
             
@@ -167,7 +168,26 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
         this.webSocketService.getMessages().subscribe({
           next:(data:any) => {
             console.log(data);
+             // Check if the page is already scrolled to the bottom
+             const isScrolledToBottom = this.messageWindow.scrollHeight - this.messageWindow.offsetHeight <= this.messageWindow.scrollTop + 1;
+             console.log(isScrolledToBottom)
             this.messages.push(data);
+           
+            setTimeout(() => {
+              // Check if the page is already scrolled to the bottom
+            
+            console.log(isScrolledToBottom)
+            // Call scrollToBottom() only if the page is already at the bottom
+            if (isScrolledToBottom) {
+              this.scrollToBottom('no');
+    }
+            });
+            
+            this.webSocketService.MarkMessagesAsRead(this.recieverUsername).subscribe({
+              next:(data:any)=>{
+                console.log(data)
+              }
+            })
             
           },
           error:(error) => {
@@ -199,14 +219,18 @@ private messageWindow: any;
 ngAfterViewInit() {
       
   this.messageWindow = document.getElementById('messageContainer');
-  setTimeout(() => {
-    this.scrollToBottom();
-  }, 0);
-      }
 
+      }
+      private scrolledToBottom=false;
       ngAfterViewChecked() {
-        this.messageWindow = document.getElementById('messageContainer');
-        this.scrollToBottom();
+        if(this.scrolledToBottom==false){
+          this.messageWindow = document.getElementById('messageContainer');
+          this.scrollToBottom('scrolledOnLoad');
+          
+        }
+          
+        
+        
       }
 
   
@@ -220,10 +244,14 @@ onMessageContainerScroll() {
   }
       }
 
-scrollToBottom() {
+scrollToBottom(flag:string) {
   try{
+    
     this.messageWindow.scrollTop = this.messageWindow.scrollHeight;
-
+    if(flag=='scrolledOnLoad'){
+      this.scrolledToBottom = true;
+    }
+    
     }
     catch(err){
       console.log(err)
@@ -245,17 +273,21 @@ scrollToBottom() {
       }
 
       if(this.message != ""){
+        const isScrolledToBottom = this.messageWindow.scrollHeight - this.messageWindow.offsetHeight  <= this.messageWindow.scrollTop + 1;
           this.messages.push({msg: this.message, senderid: this.sender, receiverid: this.receiver})
           console.log(this.messages)
           
-          
-          
           this.webSocketService.emit("new-message", {receiverid: this.receiver, msg: this.message, senderid: this.sender});
-          // this.webSocketService.emit('sendNotifications', {
-          //   message: `New Notification.`,
-          //   sender: this.sender,
-          //   reciever: this.receiver})
-          this.scrollToBottom();
+         
+          setTimeout(() => {
+            // Check if the page is already scrolled to the bottom
+          
+          console.log(isScrolledToBottom)
+          // Call scrollToBottom() only if the page is already at the bottom
+          if (isScrolledToBottom) {
+            this.scrollToBottom('no');
+  }
+          });
           this.webSocketService.storeMessagedb(this.chatdetails);
           this.message = '';
       }
