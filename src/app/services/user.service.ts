@@ -47,6 +47,10 @@ export class UserService {
   privateAccount(userId:string,data:any) :Observable<any>{
     return this.http.put(`${this.SERVER_URL}/api/private-account/${userId}`, data);
   }
+
+  checkPrivateAccount() :Observable<any>{
+    return this.http.get(`${this.SERVER_URL}/api/check-private-account`);
+  }
   
   followToggle(userToFollow:any):Observable<any>{
     return this.http.post(`${this.SERVER_URL}/api/follow-toggle/${userToFollow}`,{});

@@ -13,7 +13,7 @@ export class EditProfileGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if(localStorage.getItem('userData')){
         
-        this.router.navigateByUrl(`/edit-profile`) //change /edit-profile/ to home 
+        this.router.navigateByUrl(`/home`) //change /edit-profile/ to home 
           return false;
       }
       else{

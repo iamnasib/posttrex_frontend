@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { WebsocketService } from '../services/websocket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private webSocketService: WebsocketService){}
   unreadMessagesCount: number = 0;
   contentLoaded=false
+  subscription!:Subscription;
   
   ngOnInit(): void {
     this.webSocketService.unreadMessagesBadge().subscribe({
@@ -21,7 +23,7 @@ export class HomeComponent implements OnInit {
         this.contentLoaded=true
       }
     })
-    this.webSocketService.getMessages().subscribe({
+    this.subscription=this.webSocketService.getMessages().subscribe({
       next:(data:any) => {
         console.log(data);
         if(data!=null){
@@ -45,5 +47,10 @@ export class HomeComponent implements OnInit {
         
       }
     });
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

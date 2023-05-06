@@ -10,7 +10,7 @@ import { environment } from "src/environments/environment"
 export class WebsocketService {
 
   private socket: any;
-  readonly uri: string =  "http://localhost:3000";
+  readonly uri: string = "https://efficient-aboard-spectroscope.glitch.me" ; //"http://localhost:3000"
   SERVER_URL: string;
   
   constructor(

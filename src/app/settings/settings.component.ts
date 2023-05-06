@@ -20,6 +20,7 @@ export class SettingsComponent implements OnInit {
   userProfile:any;
   showAlert: boolean=false;
   message: string='';
+  contentLoaded: boolean=false;
   constructor(private location: Location,private authService:AuthService,private router:Router,
     private userService:UserService){}
 
@@ -37,7 +38,7 @@ export class SettingsComponent implements OnInit {
           this.isPrivate=this.userProfile.is_private
           this.isVerified=this.userProfile.is_verified
           console.log(this.isPrivate,this.isVerified)
-          
+          this.contentLoaded=true
         },
         error:(error)=>{
           console.log(error);

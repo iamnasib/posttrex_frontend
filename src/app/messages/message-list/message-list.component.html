@@ -8,7 +8,7 @@
   <div *ngIf="newMessages" id="alert-1" class="flex p-4 mb-4 text-blue-700 border border-blue-300 rounded-lg rounded-lg bg-blue-50" role="alert">
     <span class="sr-only">Info</span>
     <div class="ml-3 text-sm font-medium">
-       <a  (click)="ngOnInit()" class="font-semibold cursor-pointer hover:underline">New Message Received</a>
+       <a  (click)="ngOnInit()" class="font-semibold cursor-pointer">New Message Received</a>
     </div>
       <button (click)="newMessages=false" type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-50 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8" data-dismiss-target="#alert-1" aria-label="Close">
         <span class="sr-only">Close</span>
@@ -27,9 +27,12 @@
               <p *ngIf="chat.unread_msgs<2" [ngClass]="{'font-medium text-black': chat.receiver == currentUsername && !chat.is_read, 'text-gray-400': chat.is_read }"
                class="truncate overflow-hidden w-48 sm:w-80" >
                 {{ chat.last_message }}</p>
-                <p *ngIf="chat.unread_msgs>1" [ngClass]="{'font-medium text-black': chat.receiver == currentUsername && !chat.is_read, 'text-gray-400': chat.is_read }"
+                <p *ngIf="chat.unread_msgs>1 && currentUsername == chat.receiver" [ngClass]="{'font-medium text-black': chat.receiver == currentUsername && !chat.is_read, 'text-gray-400': chat.is_read }"
                class="truncate overflow-hidden w-48 sm:w-80" >
                 {{ chat.unread_msgs }} new messages.</p>
+                <p *ngIf="chat.unread_msgs>1 && currentUsername != chat.receiver" [ngClass]="{'font-medium text-gray-400': chat.receiver == currentUsername && !chat.is_read, 'text-gray-400': chat.is_read }"
+                  class="truncate overflow-hidden w-48 sm:w-80" >
+                   {{ chat.last_message }}</p>
               <span class="text-xs text-gray-400">{{ formatTimeDiff(chat.last_message_sent_date) }}</span>
             </div>
             </div>

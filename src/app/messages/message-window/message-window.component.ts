@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { UserService } from '../../services/user.service';
 import { WebsocketService } from '../../services/websocket.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
   crntUserIsBlocked=false;
   showScrollToBottomButton: boolean=false;
   contentLoaded=false;
+  subscription!: Subscription;
   
 
   constructor(
@@ -165,7 +167,7 @@ export class MessageWindowComponent implements OnInit,AfterViewInit,AfterViewChe
     })
         this.webSocketService.emit('join', {userid:this.sender});
 
-        this.webSocketService.getMessages().subscribe({
+        this.subscription= this.webSocketService.getMessages().subscribe({
           next:(data:any) => {
             console.log(data);
              // Check if the page is already scrolled to the bottom
@@ -232,7 +234,11 @@ ngAfterViewInit() {
         
         
       }
-
+      ngOnDestroy() {
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+        }
+      }
   
 onMessageContainerScroll() {
         // Check if user has scrolled up

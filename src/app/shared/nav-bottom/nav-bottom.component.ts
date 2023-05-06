@@ -1,5 +1,6 @@
 import { Component,OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { NotificationsService } from 'src/app/services/notifications.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
 
@@ -16,6 +17,7 @@ export class NavBottomComponent implements OnInit{
   notifications:any[]=[]
   notification:any
   newMessages: boolean =false;
+  subscription!: Subscription;
   constructor(private router: Router,private webSocketService: WebsocketService,private notificationsService: NotificationsService){
     this.current=window.location.pathname
   }
@@ -58,7 +60,7 @@ export class NavBottomComponent implements OnInit{
         }
       })
 
-      this.webSocketService.getMessages().subscribe({
+      this.subscription= this.webSocketService.getMessages().subscribe({
         next:(data:any) => {
           console.log(data);
           if(data!=null){
@@ -102,6 +104,13 @@ export class NavBottomComponent implements OnInit{
           }
         })
   }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   reloadPage(option:any){
     if(option=='home'){
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -114,8 +123,10 @@ export class NavBottomComponent implements OnInit{
       });
     }
     else if(option=='notifications'){
+      this.notification=0
       this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
         this.router.navigate(['notifications']);
+
       });
     }
     else if(option=='profile'){

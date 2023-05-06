@@ -18,6 +18,7 @@ export class NotificationsComponent implements OnInit {
   currentUserID:any
   followRequestsLength:any
   contentLoaded=false
+  isPrivate:any
   constructor(private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
@@ -34,10 +35,16 @@ export class NotificationsComponent implements OnInit {
       next:(data:any) => {
         console.log(data)
         this.notifications=data
-        this.contentLoaded=true
+        
         if(this.notifications.length>0){
           this.notificationsService.MarkNotificationsAsRead().subscribe()
         }
+      }
+    })
+    this.userService.checkPrivateAccount().subscribe({
+      next:(data:any)=>{
+        console.log(data)
+        this.isPrivate=data.is_private
       }
     })
     
@@ -48,7 +55,7 @@ export class NotificationsComponent implements OnInit {
         console.log("requested_to array",requested_to)
         console.log("requested_by array",requested_by)
         this.followRequestsLength = requested_by.length
-        
+        this.contentLoaded=true
       }
     });
     // this.webSocketService.recieveNotifications().subscribe({

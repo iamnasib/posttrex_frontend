@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DatePipe, Location } from '@angular/common'
 import { UserService } from '../../services/user.service';
 import { WebsocketService } from '../../services/websocket.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-message-list',
@@ -14,6 +15,7 @@ export class MessageListComponent implements OnInit {
   recentChats:any
   newMessages = false;
   contentLoaded=false;
+  subscription!: Subscription;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -47,7 +49,7 @@ export class MessageListComponent implements OnInit {
         console.log(error);
       }
     })
-    this.webSocketService.getMessages().subscribe({
+    this.subscription=this.webSocketService.getMessages().subscribe({
       next:(data:any) => {
         console.log(data);
         if(data!=null){
@@ -65,6 +67,13 @@ export class MessageListComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   formatTimeDiff(dateStr: string): string {
     if (!dateStr) {
       return '';

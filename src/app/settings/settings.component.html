@@ -1,5 +1,10 @@
 
-<div class="h-full px-3  overflow-y-auto bg-gray-50 ">
+<div *ngIf="!contentLoaded" class="container h-screen flex flex-col items-center justify-center">
+   <h1 class="text-3xl animate-pulse font-logo cursor-pointer tracking-wide">Posttrex
+     <sup class="text-sm z-0 ">BETA</sup>  
+   </h1>
+ </div>
+<div *ngIf="contentLoaded" class="h-full px-3  overflow-y-auto bg-gray-50 ">
    <div *ngIf="showAlert" id="alert-1" class="flex p-4 mb-4 text-green-800 border border-green-300 rounded-lg bg-green-50" role="alert">
       <span class="sr-only">Info</span>
       <div class="ml-3 text-sm font-medium">

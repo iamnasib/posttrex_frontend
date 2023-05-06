@@ -15,6 +15,7 @@ import { HomeComponent } from './home/home.component';
 import { FollowingFollowersComponent } from './following-followers/following-followers.component';
 import { BlockedUsersComponent } from './blocked-users/blocked-users.component';
 import { SendFeedbackComponent } from './send-feedback/send-feedback.component';
+import { PrivateAccountCheckGuard } from './guards/private-account-check.guard';
 
 
 const routes: Routes = [
@@ -42,7 +43,7 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] ,
   data: { showNav: true , showHeader: true,showTopNav:false}},
 
-  { path: 'follow-requests/:type', component: FollowRequestsComponent, canActivate: [AuthGuard] ,
+  { path: 'follow-requests/:type', component: FollowRequestsComponent, canActivate: [AuthGuard,PrivateAccountCheckGuard] ,
   data: { showNav: true , showHeader: true,showTopNav:false}},
 
   { path: 'notifications', component: NotificationsComponent, canActivate: [AuthGuard] ,
